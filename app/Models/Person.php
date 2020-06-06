@@ -4,24 +4,33 @@ namespace App\Models;
 
 use App\Models\Traits\HasBookmarks;
 use App\Models\Traits\HasDonations;
+use App\Models\Traits\HasHashTags;
 use App\Models\Traits\HasMedia;
 use App\Models\Traits\HasPetitions;
-use App\Models\Traits\HasSocialMedia;
 use App\Models\Traits\Unguarded;
 use EloquentFilter\Filterable;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Person extends BaseModel
+class Person extends BaseModel implements Searchable
 {
     use Unguarded;
     use HasPetitions;
     use HasDonations;
     use HasMedia;
-    use HasSocialMedia;
+    use HasHashTags;
     use HasBookmarks;
     use Filterable;
     use HasSlug;
+
+    const SLUG = 'identifier';
+
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult($this, $this->identifier);
+    }
 
     public function images()
     {
@@ -35,7 +44,7 @@ class Person extends BaseModel
             'petitionLinks',
             'mediaLinks',
             'images',
-            'socialMedia',
+            'hashTags',
         ]);
     }
 
@@ -43,6 +52,6 @@ class Person extends BaseModel
     {
         return SlugOptions::create()
             ->generateSlugsFrom('full_name')
-            ->saveSlugsTo('identifier');
+            ->saveSlugsTo(self::SLUG);
     }
 }

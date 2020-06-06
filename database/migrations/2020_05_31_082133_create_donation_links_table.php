@@ -12,8 +12,11 @@ class CreateDonationLinksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('person_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
+            $table->string('banner_img_url')->nullable();
             $table->string('title');
             $table->text('description');
+            $table->text('outcome')->nullable();
+            $table->string('outcome_img_url')->nullable();
             $table->string('link');
             $table->foreign('person_id')->references('id')->on('people');
             $table->smallInteger('status')->default(0);

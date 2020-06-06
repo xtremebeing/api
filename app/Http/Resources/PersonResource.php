@@ -18,13 +18,14 @@ class PersonResource extends JsonResource
             'age' => $this->age,
             'city' => $this->city,
             'country' => $this->country,
-            'biography' => $this->biography,
+            'their_story' => $this->context,
+            'outcome' => $this->outcome,
             'context' => $this->context,
             'images' => $this->images,
             'donation_links' => DonationResource::collection($this->whenLoaded('donationLinks')),
             'petition_links' => PetitionResource::collection($this->whenLoaded('petitionLinks')),
             'media_links' => MediaLinksResource::collection($this->whenLoaded('mediaLinks')),
-            'social_media' => SocialMediaResource::collection($this->whenLoaded('socialMedia')),
+            'hash_tags' => HashTagResource::collection($this->whenLoaded('hashTags')),
         ];
     }
 }
